@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: golden-snitch
+spec:
+  serviceAccountName: snitch
+  containers:
+  - name: golden-snitch
+    image: philipnrmn/goldensnitch
