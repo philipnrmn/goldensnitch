@@ -57,11 +57,18 @@ func main() {
 			panic(err.Error())
 		}
 
-		fmt.Printf("There are %d nodes in the cluster\n", len(nodes.Items))
+		var cpusum int64
 
 		for _, n := range nodes.Items {
-			fmt.Println(n.Status.Capacity["cpu"])
+			cpu := n.Status.Capacity["cpu"]
+			cpucount, ok := cpu.AsInt64()
+			if ok {
+				cpusum += cpucount
+			} else {
+				fmt.Println("Could not convent %v to int64", cpu)
+			}
 		}
+		fmt.Printf("%v There are %d nodes and %d CPUs in the cluster\n", time.Now(), len(nodes.Items), cpusum)
 
 		// fmt.Println(nodes)
 
